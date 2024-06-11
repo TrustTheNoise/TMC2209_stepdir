@@ -39,9 +39,9 @@ static void setup_gpio(){
 static void setup_tim(){
 	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
 
-	TIM3->CCMR1 |= TIM_CCMR1_OC1PE | 6 << TIM_CCMR1_OC1M_Pos;
-	TIM3->CCER |= TIM_CCER_CC1E;
-	TIM3->CR1 |= TIM_CR1_ARPE;
+	TIM2->CCMR1 |= TIM_CCMR1_OC1PE | 6 << TIM_CCMR1_OC1M_Pos;
+	TIM2->CCER |= TIM_CCER_CC1E;
+	TIM2->CR1 |= TIM_CR1_ARPE;
 }
 
 static void turn_interrupt_on(){
@@ -79,17 +79,17 @@ uint8_t set_velocity(uint32_t velocity){
 
 	uint32_t max_arr = 0xFFFF;
 
-	for (uint32_t prescaler = 0; prescaler <= max_arr; prescaler++) {
+	for (uint32_t prescaler = 0; prescaler <= max_arr; prescaler+=1) {
 		uint32_t auto_reload = (SYSTEM_CLOCK_FREQUENCY_HZ / (velocity * (prescaler + 1)));
 		if (auto_reload-1 <= max_arr && auto_reload % 2 == 0) {
-		 TIM2->PSC = prescaler;
-		 TIM2->ARR = auto_reload-1;
-		 TIM2->CCR1 = TIM2->ARR/2;
-		 return 1;
+			TIM2->PSC = prescaler;
+			TIM2->ARR = auto_reload-1;
+			TIM2->CCR1 = TIM2->ARR/2;
+			return 0;
 		}
 	}
 
-	return 0;
+	return 1;
 }
 
 void turn_pwm_on(){
@@ -109,9 +109,9 @@ void set_steps(uint32_t steps){
 
 void TIM2_IRQHandler(void){
 	if(TIM2->SR & TIM_SR_CC1IF){
+		TIM2->SR &= ~TIM_SR_CC1IF;
 		_steps_now+=1;
 		if(_steps_now >= _how_many_steps){
-			turn_interrupt_off();
 			turn_pwm_off();
 			_how_many_steps = 0;
 			_steps_now = 0;

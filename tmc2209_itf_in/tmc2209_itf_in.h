@@ -1,5 +1,5 @@
-#ifndef TCM20600_ITF_IN_H_
-#define ICM20600_ITF_IN_H_
+#ifndef TCM2209_ITF_IN_H_
+#define TCM2209_ITF_IN_H_
 
 #include "stm32g474xx.h"
 
@@ -19,7 +19,6 @@ typedef enum {
 /*						Structure						*/
 /*														*/
 /********************************************************/
-
 
 typedef struct {
 	void (*const setup_peripherals) (void);
@@ -63,4 +62,4 @@ uint8_t tmc2209_stop_motor(tmc2209 *tmc_instance);
 
 uint8_t tmc2209_start_motor_steps(tmc2209 *tmc_instance, uint32_t steps);
 
-#endif
+#endif /* TCM2209_ITF_IN_H_ */

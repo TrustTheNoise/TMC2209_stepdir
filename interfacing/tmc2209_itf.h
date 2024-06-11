@@ -1,7 +1,7 @@
 #ifndef TMC2209_ITF_H_
 #define TMC2209_ITF_H_
 
-#ifndef SYSTEM_MAIN_FREQUENCY
+#ifndef SYSTEM_CLOCK_FREQUENCY_HZ
     #define SYSTEM_CLOCK_FREQUENCY_HZ        16000000U // Hz
 #endif /* SYSTEM_MAIN_FREQUENCY */
 
@@ -22,4 +22,4 @@ void set_steps(uint32_t steps);
 
 void TIM2_IRQHandler(void);
 
-#endif
+#endif /* TMC2209_ITF_H_ */

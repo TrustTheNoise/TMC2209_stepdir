@@ -59,7 +59,6 @@ uint8_t tmc2209_init(tmc2209 *tmc_instance){
 	return 0;
 }
 
-// @todo perhaps need to set the return values differently
 uint8_t tmc2209_set_velocity(tmc2209 *tmc_instance, uint32_t velocity){
 	if (tmc_instance->was_initialized == 0 ){
 		return 1;
@@ -68,7 +67,7 @@ uint8_t tmc2209_set_velocity(tmc2209 *tmc_instance, uint32_t velocity){
 		return 1;
 	}
 	tmc_instance->velocity = velocity;
-	return tmc_instance->velocity;
+	return 0;
 }
 
 uint8_t tmc2209_start_motor(tmc2209 *tmc_instance){
