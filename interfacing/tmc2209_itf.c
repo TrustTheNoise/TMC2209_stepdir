@@ -29,11 +29,11 @@ static void turn_interrupt_off();
 /********************************************************/
 
 static void setup_gpio(){
-	RCC->AHB2ENR |= RCC_AHB2ENR_GPIODEN;
+	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN;
 
-	GPIOD->MODER &= ~(GPIO_MODER_MODE3_Msk | GPIO_MODER_MODE2);
-	GPIOD->MODER |= (2 << GPIO_MODER_MODE3_Pos | 1 << GPIO_MODER_MODE2_Pos);
-	GPIOD->AFR[0] |= 2 << GPIO_AFRL_AFSEL3_Pos;
+	GPIOA->MODER &= ~(GPIO_MODER_MODE0_Msk | GPIO_MODER_MODE1);
+	GPIOA->MODER |= (2 << GPIO_MODER_MODE0_Pos | 1 << GPIO_MODER_MODE1_Pos);
+	GPIOA->AFR[0] |= 1 << GPIO_AFRL_AFSEL0_Pos;
 }
 
 static void setup_tim(){
